@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        /* O seletor * aplica estas regras a todos os elementos da página */
+        *{
+            /* Remove as margens padrão de todos os elementos */
+            margin: 0;
+            /* Remove o preenchimento (padding) padrão de todos os elementos */
+            padding: 0;
+        }
+        /* Classe para estilizar o fundo da página */
+        .fundo{
+            /* Define um gradiente linear com cores entre preto e verde, formando um ângulo de 45 graus */
+            background-image: linear-gradient(45deg, black, green);
+            /* Define a altura do fundo para 100% da altura da janela do navegador */
+            height: 100vh;
+            /* Define a cor do texto como "aliceblue", um tom claro de azul */
+            color: aliceblue;
+            /* Define a fonte utilizada para o texto da página */
+            font-family: Arial, Helvetica, sans-serif;
+            /* Centraliza horizontalmente o conteúdo dentro do fundo */
+            text-align: center;
+        }
+        /* Classe que estiliza o contêiner da calculadora */
+        .calculadora{
+            /* Define a posição da calculadora como absoluta em relação ao seu elemento pai mais próximo */
+            position: absolute;
+            /* Define a cor de fundo da calculadora com transparência, usando RGBA (Red, Green, Blue, Alpha) */
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Posiciona o topo da calculadora no centro vertical da página */
+            top: 50%;
+            /* Posiciona a calculadora no centro horizontal da página */
+            left: 50%;
+            /* Desloca a calculadora 50% de seu tamanho para cima e para a esquerda, centralizando-a totalmente */
+            transform: translate(-50%, -50%);
+            /* Arredonda os cantos do contêiner da calculadora em 18px */
+            border-radius: 18px;
+            /* Define um espaçamento interno de 16px em todos os lados do contêiner */
+            padding: 16px;
+        }
+        /* Classe que estiliza os botões da calculadora */
+        .botao{
+            /* Define a largura dos botões em 60px */
+            width: 60px;
+            /* Define a altura dos botões em 60px */
+            height: 60px;
+            /* Define o tamanho da fonte usada nos botões como 25px */
+            font-size: 25px;
+            /* Muda o cursor para "pointer" quando o usuário passa o mouse sobre o botão, indicando que ele é clicável */
+            cursor: pointer;
+            /* Define a cor de fundo dos botões como uma tonalidade escura de cinza */
+            background-color: rgb(31,31,31);
+            /* Remove a borda padrão dos botões */
+            border: none;
+            /* Define a cor do texto nos botões como "aliceblue" */
+            color: aliceblue;
+            /* Define um espaçamento de 3px ao redor de cada botão */
+            margin: 3px;
+        }
+        /* Efeito visual quando o usuário passa o mouse sobre um botão */
+        .botao:hover{
+            /* Altera a cor de fundo para preto ao passar o mouse */
+            background-color: black;
+        }
+        /* Classe que estiliza a área onde o resultado do cálculo é exibido */
+        #resultado{
+            /* Define a cor de fundo do campo de resultado como branca */
+            background-color: white;
+            /* Define a largura do campo de resultado como 250px */
+            width: 250px;
+            /* Define a altura do campo de resultado como 30px */
+            height: 30px;
+            /* Adiciona uma margem de 5px ao redor do campo de resultado */
+            margin: 5px;
+            /* Define o tamanho da fonte do resultado como 25px */
+            font-size: 25px;
+            /* Define a cor do texto do resultado como preta */
+            color: black;
+            /* Alinha o texto à direita, para que os números apareçam alinhados à direita */
+            text-align: right;
+            /* Adiciona um preenchimento interno de 5px dentro do campo de resultado */
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="fundo">
+        <!-- Título principal da página -->
+        <h1>Bora Calcular</h1> <br>
+        <!-- Subtítulo da página -->
+        <h6>Calculadora Inteligênte</h6>
+        <div class="calculadora">
+            <!-- Título dentro do contêiner da calculadora -->
+            <h1>Calculadora</h1>
+            <!-- Parágrafo onde o resultado do cálculo será exibido -->
+            <p id="resultado"></p>
+           
+            <table>
+                <tr>
+                    <!-- Botão que limpa todo o conteúdo da calculadora -->
+                    <td><button class="botao" onclick="clean('')">C</button></td>
+                    <!-- Botão que apaga o último caractere inserido -->
+                    <td><button class="botao" onclick="back('')"><</button></td>
+                    <!-- Botão para inserir o operador de divisão -->
+                    <td><button class="botao" onclick="insert('/')">/</button></td>
+                    <!-- Botão para inserir o operador de multiplicação (X) -->
+                    <td><button class="botao" onclick="insert('*')">X</button></td>
+                </tr>
+
+                <tr>
+                    <!-- Botões numéricos e de operações matemáticas -->
+                    <td><button class="botao" onclick="insert('7')">7</button></td>
+                    <td><button class="botao" onclick="insert('8')">8</button></td>
+                    <td><button class="botao" onclick="insert('9')">9</button></td>
+                    <td><button class="botao" onclick="insert('-')">-</button></td>
+                </tr>
+
+                <tr>
+                    <td><button class="botao" onclick="insert('4')">4</button></td>
+                    <td><button class="botao" onclick="insert('5')">5</button></td>
+                    <td><button class="botao" onclick="insert('6')">6</button></td>
+                    <td><button class="botao" onclick="insert('+')">+</button></td>
+                </tr>
+
+                <tr>
+                    <td><button class="botao" onclick="insert('1')">1</button></td>
+                    <td><button class="botao" onclick="insert('2')">2</button></td>
+                    <td><button class="botao" onclick="insert('3')">3</button></td>
+                    <!-- Botão de igual (=) que ocupa duas linhas (106px de altura) -->
+                    <td rowspan="2"><button class="botao"style="height: 106px;" onclick="calcular('')" >=</button></td>
+                </tr>
+
+                <tr>
+                    <!-- Botão numérico 0, que ocupa duas colunas (largura de 120px) -->
+                    <td colspan="2"><button class="botao" style="width: 120px;" onclick="insert('0')">0</button></td>
+                    <!-- Botão para inserir o ponto decimal (.) -->
+                    <td><button class="botao" onclick="insert('.')">.</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        // Função para inserir números e operadores no campo de resultado
+        function insert(num){
+            // Pega o conteúdo atual do campo de resultado
+            var numero = document.getElementById('resultado').innerHTML;
+            // Adiciona o número ou operador ao final do conteúdo atual
+            document.getElementById('resultado').innerHTML = numero + num;
+        }
+        // Função para limpar o campo de resultado
+        function clean( )
+        {
+            // Define o conteúdo do campo de resultado como vazio
+            document.getElementById('resultado').innerHTML = "";
+        }  
+        // Função para apagar o último caractere inserido
+        function back()
+        {
+            // Pega o conteúdo atual do campo de resultado
+            var resultado = document.getElementById('resultado').innerHTML;
+            // Remove o último caractere do campo de resultado
+            document.getElementById('resultado').innerHTML = resultado.substring(0, resultado.length - 1);
+        }
+        // Função para calcular a expressão no campo de resultado
+        function calcular()
+        {
+            // Pega o conteúdo atual do campo de resultado
+            var resultado = document.getElementById('resultado').innerHTML;
+            // Verifica se há algo a ser calculado
+            if(resultado)
+            {
+                // Usa a função eval() para avaliar a expressão matemática e exibir o resultado
+                document.getElementById('resultado').innerHTML = eval(resultado);
+            }
+            else
+            {
+                // Se o campo estiver vazio, exibe a mensagem "Sem número"
+                document.getElementById('resultado').innerHTML = 'Sem número';
+            }
+        }
+    </script>
+</body>
+</html>
